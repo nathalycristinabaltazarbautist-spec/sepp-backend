@@ -28,7 +28,7 @@ if (process.env.FIREBASE_PRIVATE_KEY) {
 const app = express();
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // Almacenamiento de fotografías de perfil
 const carpetaPerfiles = path.join(__dirname, 'imagenes', 'perfiles');
