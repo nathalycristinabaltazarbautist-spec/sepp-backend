@@ -28,7 +28,6 @@ if (process.env.FIREBASE_PRIVATE_KEY) {
 const app = express();
 app.use(bodyParser.json());
 
-const MY_IP = '192.168.1.52'; 
 const PORT = process.env.PORT || 3000;
 
 // Almacenamiento de fotografías de perfil
@@ -510,7 +509,7 @@ app.get('/api/alertas-historial', async (req, res) => {
             CASE 
                 WHEN a.evidencia_url IS NULL OR a.evidencia_url = '' THEN ''
                 WHEN a.evidencia_url LIKE 'http%' THEN a.evidencia_url
-                ELSE 'http://${MY_IP}:${PORT}/imagenes/' || a.evidencia_url 
+                ELSE 'https://sepp-backend.onrender.com/imagenes/' || a.evidencia_url 
             END as evidencia_url
             FROM alertas a
             LEFT JOIN camaras c ON a.codigo_camara = c.codigo_camara
@@ -535,7 +534,7 @@ app.get('/api/alerta-actual/:id_docente', async (req, res) => {
                 CASE 
                     WHEN a.evidencia_url IS NULL OR a.evidencia_url = '' THEN ''
                     WHEN a.evidencia_url LIKE 'http%' THEN a.evidencia_url
-                    ELSE 'http://${MY_IP}:${PORT}/imagenes/' || a.evidencia_url 
+                    ELSE 'https://sepp-backend.onrender.com/imagenes/' || a.evidencia_url 
                 END as evidencia_url
             FROM alertas a
             LEFT JOIN camaras c ON a.codigo_camara = c.codigo_camara
@@ -583,7 +582,7 @@ app.get('/api/alertas-historial/:id_docente', async (req, res) => {
                 CASE 
                     WHEN a.evidencia_url IS NULL OR a.evidencia_url = '' THEN ''
                     WHEN a.evidencia_url LIKE 'http%' THEN a.evidencia_url
-                    ELSE 'http://${MY_IP}:${PORT}/imagenes/' || a.evidencia_url 
+                    ELSE 'https://sepp-backend.onrender.com/imagenes/' || a.evidencia_url 
                 END as evidencia_url
             FROM alertas a
             LEFT JOIN camaras c ON a.codigo_camara = c.codigo_camara
