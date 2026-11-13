@@ -7,16 +7,29 @@ const multer = require('multer');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 
-const serviceAccount = require('./serviceAccountKey.json');
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
+// Inicialización segura de Firebase (compatible con local y Render)
+if (process.env.FIREBASE_PRIVATE_KEY) {
+    // Si estamos en Render y usamos variables de entorno
+    admin.initializeApp({
+        credential: admin.credential.cert({
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+        })
+    });
+} else {
+    // Si estás en tu computadora local usando el archivo físico
+    const serviceAccount = require('./serviceAccountKey.json');
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+    });
+}
 
 const app = express();
 app.use(bodyParser.json());
 
 const MY_IP = '192.168.1.52'; 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Almacenamiento de fotografías de perfil
 const carpetaPerfiles = path.join(__dirname, 'imagenes', 'perfiles');
@@ -609,5 +622,5 @@ app.post('/api/notificacion-flask', async (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Servidor S.E.P.P. activo en http://0.0.0.0:${PORT}`);
+    console.log(`Servidor S.E.P.P. activo en puerto ${PORT}`);
 });
