@@ -18,7 +18,7 @@ if (process.env.FIREBASE_PRIVATE_KEY) {
         })
     });
 } else {
-    // Si estás en tu computadora local usando el archivo físico
+    // Si estamos en computadora local usando el archivo físico
     const serviceAccount = require('./serviceAccountKey.json');
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
